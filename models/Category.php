@@ -90,12 +90,12 @@ class Category {
 
         // Execute query
         if ($stmt->execute()) {
-            return true;
+            return ['success' => true, 'rowCount' => $stmt->rowCount()];
         }
-    
-        printf("Error: %s.\n", $stmt->error);
-        return false;
+        
+        return ['success' => false, 'error' => $stmt->error];
     }
+
     
     // Delete category
     public function delete() {
