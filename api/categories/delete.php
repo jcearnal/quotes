@@ -27,20 +27,12 @@ if (!empty($data->id)) {
     // Attempt to delete the category and check if deletion was successful
     if ($category->delete()) {
         // Successful deletion
-        echo json_encode([
-            'id' => $category->id,
-            'message' => 'Category Deleted'
-        ]);
+        echo json_encode(['id' => $category->id]);
     } else {
-        // No Category found with that ID
-        echo json_encode([
-            'id' => $category->id,
-            //'message' => 'No Categories Found'
-        ]);
+        // Attempted to delete a non-existing category
+        echo json_encode(['id' => $category->id]);
     }
 } else {
     // Missing ID parameter
-    echo json_encode([
-        'message' => 'Missing Required Parameters'
-    ]);
+    echo json_encode(['message' => 'Missing Required Parameters']);
 }
