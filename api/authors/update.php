@@ -28,14 +28,13 @@ if (!empty($data->author) && !empty($data->id)) {
     $author->author = $data->author;
 
     // Update the author
-    if($author->update()) {
-        echo json_encode(
-            array('message' => 'Author Updated')
-        );
+    if ($author->update()) {
+        echo json_encode([
+            'id' => $data->id,
+            'author' => $data->author
+        ]);
     } else {
-        echo json_encode(
-            array('message' => 'Author Not Updated')
-        );
+        echo json_encode(['message' => 'Author Not Updated']);
     }
 } else {
     echo json_encode(

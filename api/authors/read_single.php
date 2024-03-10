@@ -20,7 +20,7 @@ $author->id = isset($_GET['id']) ? $_GET['id'] : die();
 // Fetch the author
 $author->read_single();
 
-// Check if the author property has been filled (meaning an author was found)
+// Check if the author property has been filled/found
 if($author->author != null) {
     // Create an array containing the author
     $author_arr = array(

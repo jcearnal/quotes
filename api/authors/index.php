@@ -31,7 +31,6 @@ switch ($method) {
             if ($author->read_single()) {
                 echo json_encode(['id' => $author->id, 'author' => $author->author]);
             } else {
-                //http_response_code(404); // Not Found
                 echo json_encode(['message' => 'author_id Not Found']);
             }
         } else {
@@ -45,13 +44,11 @@ switch ($method) {
                     array_push($authors_arr, $author_item);
                 }
                 echo json_encode($authors_arr);
-            } else {
-                //http_response_code(404); // Not Found
+            } else {                
                 echo json_encode(['message' => 'No Authors Found']);
             }
         }
         break;
-    // Continue with cases for POST, PUT, DELETE as previously defined
     case 'POST':
         include 'create.php';
         break;
