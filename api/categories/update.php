@@ -20,7 +20,7 @@ $category = new Category($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // Set category ID to update
-$category->id = $data->id;
+$category->id = $data->id ?? null;
 
 // Check if ID and category fields are provided
 if (!empty($category->id) && isset($data->category)) {
@@ -28,19 +28,17 @@ if (!empty($category->id) && isset($data->category)) {
     $category->category = $data->category;
 
     // Attempt to update category
-    $updateResult = $category->update();
-
-    if ($updateResult['success']) {
-        // Check if any row was actually updated
-        if ($updateResult['rowCount'] > 0) {
-            echo json_encode(['message' => 'Category Updated']);
-        } else {
-            // No row was updated, meaning the category did not exist
-            echo json_encode(['message' => 'Category Not Found']);
-        }
+    if ($category->update()) {
+        // Successfully updated
+        echo json_encode([
+            'id' => $category->id, 
+            'category' => $category->category
+        ]);
     } else {
-        echo json_encode(['message' => 'Category Not Updated', 'error' => $updateResult['error']]);
+        // Update failed
+        echo json_encode(['message' => 'Category Not Updated']);
     }
 } else {
+    // Missing required fields
     echo json_encode(['message' => 'Missing Required Parameters']);
 }
