@@ -22,17 +22,28 @@ class Author {
 
     // Read single author by ID
     public function read_single() {
-        $query = 'SELECT id, author FROM ' . $this->table . ' WHERE id = ? LIMIT 1';
+        // Query to select a single author
+        $query = 'SELECT id, author FROM ' . $this->table . ' WHERE id = :id LIMIT 1';
+    
+        // Prepare statement
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $this->id);
+    
+        // Bind ID
+        $stmt->bindParam(':id', $this->id);
+    
+        // Execute query
         $stmt->execute();
-
+    
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
         if ($row) {
+            // Set properties
             $this->author = $row['author'];
             return true;
+        } else {
+            // Author not found
+            return false;
         }
-        return false;
     }
 
     // Create author
