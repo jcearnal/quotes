@@ -22,15 +22,15 @@ if ($method === 'OPTIONS') {
     exit();
 }
 
+// Check for query parameters
+$id = isset($_GET['id']) ? $_GET['id'] : null;
+
 // Routing to the correct file based on the HTTP method
-switch($method) {
+switch ($method) {
     case 'GET':
-        // Check for an ID parameter in the URL to decide between read_single.php and read.php
-        if (isset($_GET['id'])) {
-            // If an ID is set, we want to get a single author
+        if ($id) {
             include 'read_single.php';
         } else {
-            // If no ID is set, we want to get all authors
             include 'read.php';
         }
         break;
