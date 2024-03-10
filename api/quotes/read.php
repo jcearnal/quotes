@@ -33,8 +33,8 @@ if ($num > 0) {
         $quote_item = [
             'id' => $id,
             'quote' => $quote,
-            'author_id' => $author_id,
-            'category_id' => $category_id,
+            //'author_id' => $author_id,
+            //'category_id' => $category_id,
             'author_name' => $author_name,
             'category_name' => $category_name
         ];
