@@ -61,11 +61,9 @@ class Author {
         $stmt->bindParam(':author', $this->name);
     
         // Execute query
-        if($stmt->execute()) {
-            // Retrieve the ID of the newly created author
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            $this->id = $row['id'];
-            
+        if ($stmt->execute()) {
+            // Retrieve the last inserted ID
+            $this->id = $this->conn->lastInsertId();
             return true;
         }
     
