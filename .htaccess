@@ -1,0 +1,8 @@
+SetEnv DBUSER "mtuser"
+SetEnv DBPASS "qexZOC44c8A56ddtyxayWrIOeiNrOqQV"
+SetEnv DBNAME "quotesdb_kksx"
+SetEnv DBHOST "dpg-cnm81licn0vc738csa20-a.ohio-postgres.render.com"
+SetEnv DBPORT "5432"
+
+
+
