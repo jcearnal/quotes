@@ -1,39 +1,57 @@
 <?php
-// Required headers for CORS compliance and setting the content type to JSON
+// Set headers for CORS compliance and content type
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-$method = $_SERVER['REQUEST_METHOD'];
 
-// Including database and model files
+// Include database and author model
 include_once '../../config/Database.php';
 include_once '../../models/Author.php';
 
-// Instantiating Database and connecting
+// Instantiate database and connect
 $database = new Database();
 $db = $database->connect();
 
-// Instantiating an author object
+// Instantiate an author object
 $author = new Author($db);
 
-// Handling preflight CORS requests
+// Get the HTTP method
+$method = $_SERVER['REQUEST_METHOD'];
+
 if ($method === 'OPTIONS') {
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
     header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
     exit();
 }
 
-// Check for query parameters
-$id = isset($_GET['id']) ? $_GET['id'] : null;
-
-// Routing to the correct file based on the HTTP method
 switch ($method) {
     case 'GET':
-        if ($id) {
-            include 'read_single.php';
+        // Handle requests for a single author or all authors
+        if (isset($_GET['id'])) {
+            $author->id = $_GET['id'];
+            if ($author->read_single()) {
+                echo json_encode(['id' => $author->id, 'author' => $author->author]);
+            } else {
+                http_response_code(404); // Not Found
+                echo json_encode(['message' => 'author_id Not Found']);
+            }
         } else {
-            include 'read.php';
+            $result = $author->read();
+            $num = $result->rowCount();
+            if ($num > 0) {
+                $authors_arr = array();
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    extract($row);
+                    $author_item = array('id' => $id, 'author' => $author);
+                    array_push($authors_arr, $author_item);
+                }
+                echo json_encode($authors_arr);
+            } else {
+                http_response_code(404); // Not Found
+                echo json_encode(['message' => 'No Authors Found']);
+            }
         }
         break;
+    // Continue with cases for POST, PUT, DELETE as previously defined
     case 'POST':
         include 'create.php';
         break;
@@ -44,7 +62,8 @@ switch ($method) {
         include 'delete.php';
         break;
     default:
-        // Method not supported
-        header('HTTP/1.1 405 Method Not Allowed');
+        http_response_code(405); // Method Not Allowed
+        echo json_encode(['message' => 'Method Not Allowed']);
         break;
 }
+

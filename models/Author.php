@@ -22,7 +22,7 @@ class Author {
 
     // Read single author by ID
     public function read_single() {
-        $query = 'SELECT id, author FROM ' . $this->table . ' WHERE id = ? LIMIT 0,1';
+        $query = 'SELECT id, author FROM ' . $this->table . ' WHERE id = ? LIMIT 1';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
