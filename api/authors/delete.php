@@ -24,26 +24,23 @@ if (!empty($data->id)) {
     // Set ID to delete
     $author->id = $data->id;
 
-    // Attempt to delete the author
-    $result = $author->delete();
-    
-    if ($result === true) {
-        echo json_encode(
-            array('id' => $author->id, 'message' => 'Author Deleted')
-        );
-    } else if ($result === false) {
-        echo json_encode(
-            array('message' => 'No Authors Found')
-        );
+    // Attempt to delete the author and check if deletion was successful
+    if ($author->delete()) {
+        // Successful deletion
+        echo json_encode([
+            'id' => $author->id,
+            'message' => 'Author Deleted'
+        ]);
     } else {
-        // Covers any other conditions handled by the delete method
-        echo json_encode(
-            array('message' => 'Author Not Deleted')
-        );
+        // No Author found with that ID
+        echo json_encode([
+            'id' => $author->id,
+            //'message' => 'No Authors Found'
+        ]);
     }
 } else {
-    echo json_encode(
-        array('message' => 'Missing Required Parameters')
-    );
+    // Missing ID parameter
+    echo json_encode([
+        'message' => 'Missing Required Parameters'
+    ]);
 }
-
