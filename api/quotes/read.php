@@ -35,8 +35,8 @@ if ($num > 0) {
             'quote' => $quote,
             //'author_id' => $author_id,
             //'category_id' => $category_id,
-            'author_name' => $author_name,
-            'category_name' => $category_name
+            'author' => $author_name,
+            'category' => $category_name
         ];
 
         // Push each quote into the data array
