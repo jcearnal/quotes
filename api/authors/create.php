@@ -25,14 +25,13 @@ if (!empty($data->author)) {
     $author->name = $data->author;
 
     // Create the author
-    if($author->create()) {
-        echo json_encode(
-            array('message' => 'Author Created')
-        );
+    if ($author->create()) {
+        echo json_encode([
+            'id' => $author->id, 
+            'author' => $data->author
+        ]);
     } else {
-        echo json_encode(
-            array('message' => 'Author Not Created')
-        );
+        echo json_encode(['message' => 'Author Not Created']);
     }
 } else {
     echo json_encode(
