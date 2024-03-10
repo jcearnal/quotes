@@ -46,7 +46,7 @@ switch ($method) {
                 }
                 echo json_encode($authors_arr);
             } else {
-                http_response_code(404); // Not Found
+                //http_response_code(404); // Not Found
                 echo json_encode(['message' => 'No Authors Found']);
             }
         }
