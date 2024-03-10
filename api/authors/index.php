@@ -31,7 +31,7 @@ switch ($method) {
             if ($author->read_single()) {
                 echo json_encode(['id' => $author->id, 'author' => $author->author]);
             } else {
-                http_response_code(404); // Not Found
+                //http_response_code(404); // Not Found
                 echo json_encode(['message' => 'author_id Not Found']);
             }
         } else {
