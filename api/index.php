@@ -1,1 +1,1 @@
-Quotes REST API for Midterm.
+Quotes REST API for INF 653 Midterm.
