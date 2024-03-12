@@ -158,9 +158,9 @@ class Quote {
     // Update Quote
     public function update() {
         // Create query
-        $query = 'UPDATE ' . $this->table . ' 
-                SET quote = :quote, author_id = :author_id, category_id = :category_id 
-                WHERE id = :id';
+        $query = "UPDATE " . $this->table . "
+              SET quote = :quote, author_id = :author_id, category_id = :category_id
+              WHERE id = :id";
 
         // Prepare statement
         $stmt = $this->conn->prepare($query);
@@ -178,38 +178,30 @@ class Quote {
         $stmt->bindParam(':id', $this->id);
 
         // Execute query
-        if($stmt->execute()) {
-            return true;
+        if ($stmt->execute()) {
+            return $stmt->rowCount() > 0;
         }
-
-        // Print error if something goes wrong
-        printf("Error: %s.\n", $stmt->error);
-
+    
         return false;
     }
 
-    // Delete Quote
     public function delete() {
-        // Create query
         $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
-
+    
         // Prepare statement
         $stmt = $this->conn->prepare($query);
-
+    
         // Clean data
         $this->id = htmlspecialchars(strip_tags($this->id));
-
+    
         // Bind data
         $stmt->bindParam(':id', $this->id);
-
+    
         // Execute query
         if($stmt->execute()) {
-            return true;
+            return $stmt; // Return the PDOStatement object
         }
-
-        // Print error if something goes wrong
-        printf("Error: %s.\n", $stmt->error);
-
+    
         return false;
     }
 
