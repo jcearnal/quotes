@@ -34,8 +34,8 @@ if (!is_null($author_id) && !is_null($category_id)) {
             $quote_item = array(
                 'id' => $id,
                 'quote' => $quote,
-                'author_id' => $author_id,
-                'category_id' => $category_id,
+                //'author_id' => $author_id,
+                //'category_id' => $category_id,
                 'author_name' => $author_name,
                 'category_name' => $category_name
             );

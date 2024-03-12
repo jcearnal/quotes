@@ -25,19 +25,19 @@ if ($method === 'OPTIONS') {
 
 switch ($method) {
     case 'GET':
-        // Handle requests for quotes by a specific author and category
-        if (isset($_GET['author_id']) && isset($_GET['category_id'])) {
-            // Fetch quotes by author and category
+        if (isset($_GET['author_id']) && !isset($_GET['category_id'])) {
+            // Fetch quotes by author only
             $quote->author_id = $_GET['author_id'];
+            include 'read_by_author.php';
+        } elseif (!isset($_GET['author_id']) && isset($_GET['category_id'])) {
+            // Fetch quotes by category only
             $quote->category_id = $_GET['category_id'];
-            include 'read_by_author_and_category.php';
-        }
-        // Fetch a single quote
-        elseif (isset($_GET['id'])) {
+            include 'read_by_category.php';
+        } elseif (isset($_GET['id'])) {
+            // Fetch a single quote by ID
             include 'read_single.php';
-        } 
-        // Fetch all quotes
-        else {
+        } else {
+            // Fetch all quotes
             include 'read.php';
         }
         break;
