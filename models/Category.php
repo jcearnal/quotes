@@ -30,21 +30,28 @@ class Category {
     // Read single category by ID
     public function read_single() {
         // Create query
-        $query = 'SELECT id, category FROM ' . $this->table . ' WHERE id = ? LIMIT 1';
+        $query = 'SELECT id, category FROM ' . $this->table . ' WHERE id = :id LIMIT 1';
 
         // Prepare statement
         $stmt = $this->conn->prepare($query);
 
-        // Bind ID
-        $stmt->bindParam(1, $this->id);
+        // Bind ID parameter
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
 
         // Execute query
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Set properties
-        $this->category = $row['category'];
+        // Check if any category was returned
+        if ($row) {
+            // Set properties
+            $this->id = $row['id'];
+            $this->category = $row['category'];
+            return true; // Category found
+        } else {
+            return false; // No category found
+        }
     }
 
     // Create category
